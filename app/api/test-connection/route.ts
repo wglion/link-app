@@ -6,7 +6,7 @@ export async function GET() {
     const supabase = await createClient();
     
     // 测试连接
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('energy_data')
       .select('count')
       .limit(1);
