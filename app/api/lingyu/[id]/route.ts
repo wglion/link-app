@@ -3,11 +3,11 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
-    const id = params.id;
+    const { id } = await params;
 
     // 获取灵语详情
     const { data, error } = await supabase
