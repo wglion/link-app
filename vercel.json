@@ -1,6 +1,23 @@
 {
   "public": true,
   "github": {
-    "silent": true
-  }
+    "silent": true,
+    "deploymentEnabled": true
+  },
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/download/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ]
 }
