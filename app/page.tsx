@@ -45,7 +45,7 @@ export default function Home() {
         </div>
         <div className="rounded-2xl overflow-hidden shadow-2xl">
           <img
-            src="https://images.unsplash.com/photo-1579586337278-3b4961f2d653?auto=format&fit=crop&w=800&q=60"
+            src="/linglink-band.jpg"
             alt="LingLink Band"
             className="w-full"
           />
