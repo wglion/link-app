@@ -45,13 +45,15 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // 修改第49-54行的重定向条件
+  // 修改重定向条件，允许直接下载APK文件
   if (
     request.nextUrl.pathname !== "/" &&
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
     !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/api")  // 添加这行，排除API路径
+    !request.nextUrl.pathname.startsWith("/api") &&
+    !request.nextUrl.pathname.startsWith("/download") &&  // 添加这行，排除下载路径
+    !request.nextUrl.pathname.endsWith(".apk")  // 添加这行，排除APK文件
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
