@@ -37,7 +37,7 @@ export default function LanternFestival() {
   const [showDragon, setShowDragon] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
   const fireworkIdRef = useRef(0);
 
   // 预生成星星位置，避免 hydration 不匹配
@@ -272,7 +272,7 @@ export default function LanternFestival() {
 
     return () => {
       window.removeEventListener("resize", resize);
-      if (animationRef.current) {
+      if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);
       }
     };
