@@ -53,6 +53,8 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith("/auth") &&
     !request.nextUrl.pathname.startsWith("/api") &&
     !request.nextUrl.pathname.startsWith("/download") &&  // 添加这行，排除下载路径
+    !request.nextUrl.pathname.startsWith("/lantern-festival") &&
+    !request.nextUrl.pathname.startsWith("/lantern-festival/") &&
     !request.nextUrl.pathname.endsWith(".apk")  // 添加这行，排除APK文件
   ) {
     // no user, potentially respond by redirecting the user to the login page
