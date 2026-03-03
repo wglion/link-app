@@ -29,6 +29,15 @@ export default function Home() {
         <p className="text-lg text-slate-300 max-w-2xl mx-auto">
           One chip · One life · One code — verify authenticity in a second
         </p>
+        {/* 元宵节快乐链接 */}
+        <div className="mt-6">
+          <a
+            href="/lantern-festival"
+            className="inline-block bg-gradient-to-r from-red-500 to-yellow-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-red-400 hover:to-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-lg"
+          >
+            🏮 元宵节快乐 🏮
+          </a>
+        </div>
       </section>
 
       {/* Product intro */}
