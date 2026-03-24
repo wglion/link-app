@@ -1,5 +1,15 @@
 import { Lunar, Solar } from 'lunar-typescript';
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  calculateShiShen,
+  getHiddenStems,
+  calculateKongWang,
+  calculateShiErChangSheng,
+  calculateShenSha,
+  analyzeBranchRelations,
+  analyzeWuxingState
+} from '@/lib/bazi/calculator';
+
 
 // 八字计算接口
 export async function POST(request: NextRequest) {
@@ -40,6 +50,45 @@ export async function POST(request: NextRequest) {
     
     // 获取星座
     const xingZuo = solar.getXingZuo();
+
+    // 计算 detail 字段
+    const dayMaster = dayGanZhi[0];
+    const branches = [yearGanZhi[1], monthGanZhi[1], dayGanZhi[1], timeGanZhi[1]];
+
+    const buildPillar = (ganZhi: string, nayin: string) => {
+      const stem = ganZhi[0];
+      const branch = ganZhi[1];
+      const hiddenStems = getHiddenStems(branch);
+
+      return {
+        ganShen: calculateShiShen(dayMaster, stem),
+        heavenlyStem: stem,
+        earthlyBranch: branch,
+        hiddenStems,
+        branchDeities: hiddenStems.map(hs => calculateShiShen(dayMaster, hs.split('·')[0])),
+        naYin: nayin,
+        kongWang: calculateKongWang(dayGanZhi),
+        diShi: calculateShiErChangSheng(dayMaster, branch),
+        ziZuo: calculateShiErChangSheng(stem, branch),
+        shenSha: calculateShenSha(yearGanZhi[0], dayMaster, [branch])
+      };
+    };
+
+    const detail = {
+      pillars: {
+        year: buildPillar(yearGanZhi, lunar.getYearNaYin()),
+        month: buildPillar(monthGanZhi, lunar.getMonthNaYin()),
+        day: buildPillar(dayGanZhi, lunar.getDayNaYin()),
+        hour: buildPillar(timeGanZhi, lunar.getTimeNaYin())
+      },
+      relations: analyzeBranchRelations(branches),
+      wuxingState: analyzeWuxingState({
+        year: yearGanZhi,
+        month: monthGanZhi,
+        day: dayGanZhi,
+        time: timeGanZhi
+      })
+    };
     
     return NextResponse.json({
       success: true,
@@ -88,7 +137,9 @@ export async function POST(request: NextRequest) {
         jieqi: {
           prev: lunar.getPrevJieQi(),
           next: lunar.getNextJieQi()
-        }
+        },
+        // 详细信息
+        detail
       }
     });
     

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -p \"LingChain_占卜总接口_v2.docx\" word/document.xml)",
+      "Bash(sed 's/<[^>]*>//g')",
+      "Bash(\"e:\\\\softDev\\\\supabase\\\\link-app\\\\占卜模块优化方案.md\":*)",
+      "Bash(npm run:*)",
+      "Bash(python3 -m json.tool)"
+    ]
+  }
+}
