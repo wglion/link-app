@@ -57,8 +57,8 @@ export function getHiddenStems(branch: string): string[] {
 
 // 计算空亡
 export function calculateKongWang(dayPillar: string): string {
-  const stem = dayPillar[0];
-  const branch = dayPillar[1];
+  const stem = dayPillar[0] as any;
+  const branch = dayPillar[1] as any;
 
   const stemIndex = HEAVENLY_STEMS.indexOf(stem);
   const branchIndex = EARTHLY_BRANCHES.indexOf(branch);
